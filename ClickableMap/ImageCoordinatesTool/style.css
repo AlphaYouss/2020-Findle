@@ -1,0 +1,33 @@
+body {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  border:0;
+  margin: 0;
+  background-color: rgb(220, 220, 220);
+}
+
+#inner {
+  background-color: white;
+  box-shadow: 2px 2px 50px rgba(0, 0, 0, 0.2);
+}
+
+img { 
+  float: left;
+} 
+
+h2 {
+  margin-top: 20%;
+  margin-left: 13px;
+}
+
+#test {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: lime;
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+  border-radius: 50%;
+}

@@ -1,0 +1,63 @@
+﻿@using System.Data
+
+@model System.Data.DataTable
+
+<style>
+    #searchResultsTable td:nth-of-type(6) {
+        display: none;
+    }
+
+    #searchResultsTable th:nth-of-type(6) {
+        display: none;
+    }
+</style>
+
+<h2>
+    Results
+</h2>
+
+
+@if (Model.Rows.Count != 0)
+{
+    <span>@Model.Rows.Count users found.</span>
+
+    <table id="searchResultsTable" class="result-users">
+        <thead>
+            <tr>
+                @foreach (DataColumn column in Model.Columns)
+                {
+                    <th scope="col">@column.Caption</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.Rows)
+            {
+                <tr scope="row">
+                    <td>@row[0].ToString()</td>
+                    <td>@row[1].ToString()</td>
+                    <td>@row[2].ToString()</td>
+                    <td>@row[3].ToString()</td>
+
+                    @if (Convert.ToBoolean(row[4]) == true)
+                    {
+                        <td>
+                            <form asp-controller="User" asp-action="DisplayUser" method="post">
+                                <input type="hidden" id="targetId" name="targetId" value="@row["ID"]" />
+                                <button class="btn btn-primary" type="submit">Find user</button>
+                            </form>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>User is not findable.</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <span>No results.</span>
+}

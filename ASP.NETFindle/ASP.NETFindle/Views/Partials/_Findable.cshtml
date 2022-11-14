@@ -1,0 +1,134 @@
+﻿@model ASP.NETFindle.Models.User
+
+@using Microsoft.AspNetCore.Http;
+@using System.Data;
+
+<head>
+    <style>
+        /*Switch*/
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin-right: 15px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+        /*End Switch*/
+        /*Slider*/
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #5C5C5C;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .slider {
+            background-color: #663366;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #663366;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+
+        /*End slider*/
+
+    </style>
+</head>
+<body onload="checkSwitch()">
+    <form method="post">
+
+        <div style="font-size: 20px; font-family:Arial; padding-top:20px; margin-top:20px; line-height:34px;">
+            <div>
+                @if (Context.Session.GetString("Findable") == "True")
+                {
+                    <label class="switch">
+                        <input onclick="setFindable()" type="checkbox" asp-for="Findable" name="Findable" id="findableSwitch" checked>
+                        <span class="slider round"></span>
+                    </label>
+                }
+                else
+                {
+                    <label class="switch">
+                        <input onclick="setFindable()" type="checkbox" asp-for="Findable" name="Findable" id="findableSwitch">
+                        <span class="slider round"></span>
+                    </label>
+                }
+                <a id="p"></a>
+                <br /><br />
+            </div>
+        </div>
+    </form>
+</body>
+
+<div id="result"></div>
+
+<script>
+
+    if (document.getElementById("findableSwitch").checked === true) {
+        document.getElementById("p").innerHTML = "Findable";
+    } else {
+        document.getElementById("p").innerHTML = "Findablen't";
+    }
+
+    function setFindable() {
+        //document.getElementById("findableForm").submit();
+        if (document.getElementById("findableSwitch").checked === true) {
+            FindableSet(true);
+            document.getElementById("p").innerHTML = "Findable";
+        } else {
+            FindableSet(false);
+            document.getElementById("p").innerHTML = "Findablen't";
+        }
+    }
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<script>
+    function FindableSet(findableVal) {
+    $.ajax({
+    url: "@Url.Action("Findable", "User")",
+    type: 'POST',
+        data: { findable: findableVal},
+    datatype: 'json',
+    });
+    }
+</script>

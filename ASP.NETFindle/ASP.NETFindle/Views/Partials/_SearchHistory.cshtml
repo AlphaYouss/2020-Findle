@@ -1,0 +1,22 @@
+﻿@using System.Data
+@model System.Data.DataTable
+
+@if (Model != null)
+{
+    <span>@Model.Rows.Count histories found.</span>
+    <br />
+
+    @foreach (DataRow row in Model.Rows)
+    {
+        <br />
+        <div>
+            <span>Name: @row[0].ToString() @row[1].ToString()</span>
+            <br />
+            <span>Date: @row[2].ToString()</span>
+        </div>
+    }
+}
+else
+{
+    <span>No results.</span>
+}

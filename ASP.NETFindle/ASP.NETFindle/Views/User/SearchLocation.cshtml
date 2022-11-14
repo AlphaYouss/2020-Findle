@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Search location";
+    Layout = "_FindleLayout";
+
+    var targetUser = ViewData["targetUser"] as ASP.NETFindle.Models.User;
+}
+
+@model System.Data.DataTable
+
+<h1>User location</h1>
+
+<body>
+    <div>
+        Name: @targetUser.Firstname @targetUser.Lastname
+    </div>
+    <div>
+        Email: @targetUser.Email
+    </div>
+    <div>
+        Profile: @targetUser.Profile
+    </div>
+    <div>
+        Function: @targetUser.UserFunction
+    </div>
+
+    @{Html.RenderPartial("../Partials/_Map", Model);}
+</body>

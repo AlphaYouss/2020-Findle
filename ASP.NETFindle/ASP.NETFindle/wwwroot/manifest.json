@@ -1,0 +1,21 @@
+{
+  "name": "Findle - fontys find people",
+  "short_name": "FindApp",
+  "description": "Vind mensen binnne P8",
+  "icons": [
+    {
+      "src": "/img/Findl192x192.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/img/Findle256x256.png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/img/Findle512x512",
+      "sizes": "512x512"
+    }
+  ],
+  "display": "standalone",
+  "start_url": "/"
+}

@@ -1,0 +1,159 @@
+﻿@using System.Data
+
+@model System.Data.DataTable
+
+@{
+    ViewData["Title"] = "SetLocation";
+    Layout = "_FindleLayout";
+}
+
+<h1>Set location</h1>
+
+<body class="maincontent" onload="ClearParamaters()">
+    <div>
+        @if (Model.Rows.Count != 0)
+        {
+            <div>
+                <span>@Model.Rows.Count Locations found.</span>
+            </div>
+            <div>
+                <input type="button" formmethod="post" value="0" onclick="@("window.location.href='" + @Url.Action("GetFloor", "User", new {floorid = 0})+ "'");" />
+                <input type="button" formmethod="post" value="1" onclick="@("window.location.href='" + @Url.Action("GetFloor", "User", new {floorid = 1})+ "'");" />
+                <input type="button" formmethod="post" value="2" onclick="@("window.location.href='" + @Url.Action("GetFloor", "User", new {floorid = 2})+ "'");" />
+                <input type="button" formmethod="post" value="3" onclick="@("window.location.href='" + @Url.Action("GetFloor", "User", new {floorid = 3})+ "'");" />
+            </div>
+
+            <div>
+                @{
+                    string src = "../img/P8-0" + @ViewData["selectedFloor"] + ".png";
+                    string usemap = "#P8-0" + @ViewData["selectedFloor"];
+                    string mapname = "P8-0" + @ViewData["selectedFloor"];
+                }
+                <img src="@src" usemap="@usemap" />
+                <map class="map" name="@mapname">
+                    @foreach (DataRow row in Model.Rows)
+                    {
+                        <area onclick="OpenModal(this.id)" href="#" data-roomnumber="@row[0].ToString()" alt="@row[0].ToString()" id="@row[1].ToString()" shape="@row[2].ToString()" coords="@row[3].ToString()">
+                    }
+                </map>
+            </div>
+        }
+        else
+        {
+            <span>No results.</span>
+        }
+    </div>
+
+    <div id="modal-enveloper">
+        <div id="modal" data-response="fault">
+            <p>Are you in: <span id="modal-span">room number</span></p>
+            <button onclick="ConfirmRoom()">Yes</button><button onclick="ClearModal()">No</button>
+        </div>
+    </div>
+
+    <div class="highlight-element"></div>
+
+    <style>
+        area:hover {
+            cursor: pointer;
+            outline-color: red;
+        }
+
+        area.selected {
+            outline-color: red;
+        }
+
+        #modal-enveloper {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+            #modal-enveloper.visible {
+                display: block;
+            }
+
+        #modal {
+            position: absolute;
+            width: 250px;
+            height: 200px;
+            padding: 15px;
+            border-radius: 15px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+        }
+
+        .highlight-element {
+            position: absolute;
+            background-color: transparent;
+            border: 1px solid red;
+            top: 50px;
+            left: 50px;
+        }
+    </style>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="~/lib/imageMapResizer/js/imageMapResizer.min.js"></script>
+
+    <script>
+        imageMapResize();
+
+        function ClearParamaters() {
+            window.history.replaceState({}, document.title, "/User/GetFloor");
+        }
+
+        function OpenModal(roomId) {
+            var x = document.getElementById("modal");
+            x.dataset.response = roomId;
+            var y = document.getElementById("modal-span");
+            var Id = document.getElementById(roomId);
+            Id.classList.add("selected");
+            var roomnumber = Id.dataset.roomnumber;
+            y.innerText = roomnumber + "?";
+            var z = document.getElementById("modal-enveloper");
+            z.classList.add("visible");
+        }
+
+        function ConfirmRoom() {
+            var x = document.getElementById("modal");
+            var y = document.getElementById("modal-span");
+            var roomnumber = x.dataset.response;
+            var Id = document.getElementById(roomnumber);
+            Id.classList.add("selected");
+            roomnumber = roomnumber.replace("area-PK", "");
+            y.innerText = "Processing....";
+            $.ajax({
+                type: 'GET',
+                url: 'ChangeLocation',
+                data: { id: roomnumber },
+                datatype: 'json',
+                complete: function () {
+                    alert("It has been saved!");
+                    var z = document.getElementById("modal-enveloper");
+                    z.classList.remove("visible");
+                    Id.classList.remove("selected");
+                },
+            });
+            x.dataset.response = "fault";
+        }
+
+        function ClearModal() {
+            var x = document.getElementById("modal");
+            var xFuture = x.dataset.response;
+            var Id = document.getElementById(xFuture);
+            Id.classList.remove("selected");
+            x.dataset.response = "fault";
+            var y = document.getElementById("modal-span");
+            y.innerText = "No room selected.";
+            console.log("canceled");
+            var z = document.getElementById("modal-enveloper");
+            z.classList.remove("visible");
+        }
+    </script>
+</body>

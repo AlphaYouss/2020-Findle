@@ -1,0 +1,2 @@
+D:\Program Files\findle\ASP.NETFindle\.vs\ASP.NETFindle\v16\lut\0\i\UserTest\Debug\netcoreapp3.1\UserTest.AssemblyInfoInputs.cache
+D:\Program Files\findle\ASP.NETFindle\.vs\ASP.NETFindle\v16\lut\0\i\UserTest\Debug\netcoreapp3.1\UserTest.AssemblyInfo.cs

@@ -1,0 +1,59 @@
+﻿@using System.Data
+@{var targetUser = ViewData["targetUser"] as ASP.NETFindle.Models.User;}
+
+@model System.Data.DataTable
+
+<div class="maincontent">
+    @if (Model.Rows.Count != 0)
+    {
+        <div>
+            <div>
+                <button onclick="myFocusFunction()">Highlight my location</button>
+            </div>
+
+            @{
+                string src = "../img/P8-0" + @ViewData["floor"] + ".png";
+                string usemap = "#P8-0" + @ViewData["floor"];
+                string mapname = "P8-0" + @ViewData["floor"];
+            }
+
+            <img src="@src" usemap="@usemap" alt="#P8" />
+            <map name="@mapname">
+                @foreach (DataRow row in Model.Rows)
+                {
+                    string roomnumber = @ViewData["floor"] + "." + @ViewData["room"];
+
+                    if (roomnumber == row[0].ToString())
+                    {
+                        <area data-roomnumber="@row[0].ToString()" href="javascript:void(0);" alt="@row[0].ToString()" id="@row[1].ToString()" shape="@row[2].ToString()" coords="@row[3].ToString()">
+                    }
+                }
+            </map>
+        </div>
+    }
+    else
+    {
+        <span>No results.</span>
+    }
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="~/lib/imageMapResizer/js/imageMapResizer.min.js"></script>
+
+<script>
+    imageMapResize();
+
+    var str1 = "area-PK";
+    var str2 = @targetUser.location_Id;
+    var res = str1.concat(str2);
+    var Id = document.getElementById(res);
+
+    window.onload = (event) => {
+        Id.focus();
+        Id.addEventListener("focusin", myFocusFunction);
+    };
+
+    function myFocusFunction() {
+        Id.focus();
+    }
+</script>

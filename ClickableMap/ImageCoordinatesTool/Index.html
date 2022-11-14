@@ -1,0 +1,40 @@
+
+<html>
+    <head>
+        <script  src="./js/script.js"></script>
+        <script src="./js/DotScript.js"></script>
+        <script src="./js/jquery.js"></script>
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <div id="inner">
+            <img id="myImgId" draggable="false" src="./Assets/P8-01.png" /> 
+        </div>
+           
+        <h2>
+            X:<span id="x"></span> <br/>
+            Y:<span id="y"></span> <br/>
+
+            <script>
+                var myImg = document.getElementById("myImgId");
+                
+                myImg.onmousedown = GetCoordinates;
+                
+                //myImg.onmousemove = GetCoordinates;
+                $(document).ready(function()
+                {  
+                    $(document).click(function(ev) 
+                    { 
+                        CreateDot(window.event);
+
+                    })
+                })
+            </script> 
+
+            <button onclick="Reset(),DeleteDots()">Delete Dots </button>
+
+            
+        </h2>
+    </body>
+</html>
+

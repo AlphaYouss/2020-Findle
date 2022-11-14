@@ -1,0 +1,96 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    background: #ffffff;
+    color: #666;
+}
+
+/*Navbar*/
+.navbar {
+    background-color: #663366;
+}
+
+nav .navbar-nav li a {
+    color: white;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.nav-item-right{
+    float: right;
+}
+
+/*Hover effect*/
+.custom-underline {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-underline,
+.custom-underline:hover,
+.custom-underline:focus,
+.custom-underline:active {
+    color: #fff;
+    text-decoration: none;
+}
+    .custom-underline::after {
+        content: "";
+        position: absolute;
+    }
+
+.nav-item .custom-underline::after {
+    top: 80%;
+    height: 2px;
+    width: 0%;
+    left: 5%;
+    background-color: white;
+    transition: 0.5s ease all .3s;
+}
+
+.nav-item:hover .custom-underline::after {
+    width: 90%;
+    transition: 0.3s ease all;
+}
+/*Hover effectn't*/
+
+.img-floor{
+    width: 100%;
+}
+
+.div-img-floor{
+    overflow: hidden;
+    height: 68vh;
+}
+
+/*Search results*/
+.result-users {
+    border-collapse: collapse;
+    width: 100%;
+    text-align:left;
+}
+
+    .result-users td, .result-users th {
+        padding: 8px;
+    }
+
+    .result-users tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .result-users tr:hover {
+        background-color: #ddd;
+    }
+
+    .result-users th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: white;
+        color: #0076e0;
+        border-bottom:solid;
+    }
+}
+
+        /*Search resultsn't*/
